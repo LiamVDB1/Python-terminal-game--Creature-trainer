@@ -7,6 +7,17 @@ list_of_creatures = []
 starters = []
 
 
+#Quit game
+game_on = True
+all_input = []
+""" while game_on == True:
+  for input in all_input:
+    if "quit" in input: 
+      sys.exit("You ended the game.")
+    else:
+      continue
+ """
+
 class Attack:
   def __init__(self, name, damage = 0, heal = 0, strength = 0, speed = 0):
     self.name = name
@@ -115,6 +126,7 @@ in_between = "---------=+=---------"
 def creature_choice():
   creature_choice_input = input("Hello {trainer_name} welcome to the game. You need to choose your starter creature. You can choose between: Moldblody, NetherTooth and SpriteBrute. Their stats are stated below. To choose a creature, type the creatures name.\n{starter1}\n{starter2}\n{starter3}\n".format(trainer_name = trainer_name, starter1 = starters[0], starter2 = starters[1], starter3 = starters[2]))
   creature_choice_l = creature_choice_input.lower()
+  all_input.append(creature_choice_l)
   if creature_choice_l == "moldblody":
     trainer_one.creatures.append(moldblody)
     list_of_uncaptured_creatures.remove(moldblody)
@@ -137,9 +149,12 @@ def fighting():
   print(in_between)
   print("{own_creature} wants to fight, his stats are below.".format(own_creature = own_creature.name))
   print(own_creature)
+  continue_txt = input("Press ENTER to start the fight!.")
+  all_input.append(continue_txt)
+  os.system("clear")
   counter = 1
   while enemy.health > 0:
-    print("----------------ROUND {counter}----------------".format(counter = counter))
+    print("----------------(=ROUND {counter}=)----------------".format(counter = counter))
     if own_creature.speed > enemy.speed:
       own_move = random.choice(own_creature.attacks)
       enemy_move = random.choice(enemy.attacks)
@@ -149,6 +164,7 @@ def fighting():
       print("{enemy} is using {move}".format(enemy = enemy.name, move = enemy_move.name))
       print("The stats of the creatures are : \n{own_creature_stats}\n{enemy_stats}".format(own_creature_stats = own_creature.stats(), enemy_stats = enemy.stats()))
       print(in_between)
+
       
       
     elif enemy.speed > own_creature.speed:
@@ -162,6 +178,7 @@ def fighting():
       print(in_between)
     if own_creature.health < 0:
       heal_input = input("Do you want to revive the creature with a health potion? (Yes/No)\n")
+      all_input.append(heal_input)
       if heal_input.lower() == "yes":
         own_creature.use_heal_pot()
       elif heal_input.lower() == "no":
@@ -169,9 +186,9 @@ def fighting():
         if len(trainer_one.creatures) > 0:
           random.choice(trainer_one.creatures)
         else:
-          print("Game over")
-          sys.exit()
-    input("Press ENTER to move onto the next round.")
+          sys.exit("Game over you died")
+    continue_text = input("Press ENTER to move onto the next round.")
+    all_input.append(continue_text)
     os.system("clear")
     counter += 1
 
@@ -181,29 +198,14 @@ def fighting():
 
 
 
-
-
-
-  
-
-
-
-
-
-
-
 #Game starts here
 trainer_name = input("Hello welcome to the game. The purpose of this game is to tame all the creatures by killing them. You are the chosen creature trainer, what would you like your name to be?\n")
 trainer_one = Trainer(trainer_name)
-in_between = "---------=+=---------"
+all_input.append(trainer_name)
+print(in_between)
 creature_choice()
-in_between = "---------=+=---------"
+os.system("clear")
 fighting()
-
-
-
-
-
 
 
 
