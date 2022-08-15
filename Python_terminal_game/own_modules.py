@@ -1,6 +1,7 @@
+import os
 def reset_text(function):
     print("ERROR : Invalid input")
-    input("PRESS ENTER TO CONTINUE")
-    print("\n\n\n\n\n\n")
+    continue_txt_input = input("PRESS ENTER TO CONTINUE\n:")
+    os.system("clear")
     return function()
 
